@@ -69,63 +69,39 @@ for (var j = 0; j <= cars-1; j++) {
   };
 };    
 
-// Функция формирования итоговых маршрутов для каждой из машин
+// Функция формирования для каждой из машин одной ездки
 //
-// Для каждой машины формируем маршрут из N исходных свободных (.TagBusy = false) ездок (в нашем примере их 3) до тех пор, пока количество этапов (Step) <= 10,
-// num - это порядковый номер машины.
 
   function FormationTotalsRoutes(flag, num, TotalDistance, StartIntersectionX0, StartIntersectionY0, distance, score, TotalScore, RouteTagName) {
     
     var Marshroot = SourceRoute.map((Route) => {    
-//        console.log('Route.TagName = '+ Route.TagName); 
     if (flag !== true) {
-//       console.log('flag = '+ flag);
         if (Route.TagBusy !== true) {    
 
-//           console.log('flag 1= '+ flag);
             distance = (Math.abs(StartIntersectionX0 - Route.StartIntersectionX) + Math.abs(StartIntersectionY0 - Route.StartIntersectionY)) <= 0 ?  0 : (Math.abs(StartIntersectionX0 - Route.StartIntersectionX) + Math.abs(StartIntersectionY0 - Route.StartIntersectionY));
-//            console.log('distance = '+ distance);
             TotalDistance = TotalDistance + distance + Number(Route.LengthRoute) + Number(Route.EarliestStart);
-//           console.log('TotalDistance = '+ TotalDistance);
             if ((TotalDistance <= steps) && (flag !== true)) {
       
               BonusEarliestStart = (distance - Route.EarliestStart <= 0 ? bonus : 0);
-//              console.log('BonusEarliestStart = '+ BonusEarliestStart);
               Score = ((distance + Route.LengthRoute - Route.LatestFinish) <= 0 ? Number(Route.LengthRoute) : 0);
-//             console.log('Score = '+  Score);
               TotalScore = TotalScore + BonusEarliestStart + Score;
-//              console.log('TotalScore = '+ TotalScore);
               StartIntersectionX0 = Route.FinisfIntersectionX;
               StartIntersectionY0 = Route.FinisfIntersectionY; 
               
               RouteTagName = RouteTagName + String(Route.TagName) + ',';
-//              console.log('RouteTagName = '+ RouteTagName);
               SourceRoute[Route.TagName].TagBusy = true;
                  
               TotalsRoutes[num].TagAllRoute = RouteTagName;
-//             console.log('TotalsRoutes[num].TagAllRoute = '+ TotalsRoutes[num].TagAllRoute);
               TotalsRoutes[num].LengthRoute = TotalDistance;
-//             console.log('TotalsRoutes[num].LengthRoute= '+ TotalsRoutes[num].LengthRoute);
               TotalsRoutes[num].account = TotalScore;
-//              console.log('TotalsRoutes[num].account = '+ TotalsRoutes[num].account);
-//              console.log('TotalsRoutes[num].account = '+ TotalsRoutes[num].account);
-//              console.log('Route.TagName = '+ Route.TagName);
+
               flag = true;
-//              console.log('flag 3 = '+ flag);
               return Route.TagName;
             };
 
         };
     };
    
-    
-   //  console.log('flag = '+ flag);
-
-     //TotalDistance = 0;
-    // SourceRoute[Route.TagName].TagBusy = true;
-    // flag = true;
-    // return Route.TagName;
-
     });  
     console.log(TotalsRoutes[num]);
   };
@@ -141,7 +117,7 @@ function ArrayFormationTotalsRoutes(j1) {
   var RouteTagName = "";
   var flag = false;
 
-//     console.log('cars = '+ j1);
+
      var OneMarshroot = FormationTotalsRoutes(flag, j1, TotalDistance, StartIntersectionX0, StartIntersectionY0, distance, score, TotalScore, RouteTagName);
      return TotalsRoutes;
 };
@@ -150,12 +126,9 @@ function ArrayFormationTotalsRoutes(j1) {
 // Для каждой из машин выполняем следующее:
 //
 for (j = 0; j <= cars-1; j++) {
-  console.log('         Маршрут для Машины ' + j + ' : ');
+//  console.log('         Маршрут для Машины ' + j + ' : ');
   var aa = ArrayFormationTotalsRoutes(j);
     };
-//console.log('Маршруты : ');
-//console.log(aa);
-
 //
 // Запись полкченных результатов в файл "Output.out"
 //
